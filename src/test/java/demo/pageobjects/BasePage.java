@@ -38,6 +38,14 @@ public abstract class BasePage {
         return wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(locator)));
     }
 
+    public WebElement waitOnElement(By locator){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+
+    }
+
+    public String getPageSource(){
+        return driver.getPageSource();
+    }
 
 
 }
