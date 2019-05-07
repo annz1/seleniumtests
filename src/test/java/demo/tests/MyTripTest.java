@@ -14,9 +14,9 @@ import org.testng.annotations.Test;
 import java.util.concurrent.TimeUnit;
 
 public class MyTripTest {
-    public static WebDriver driver;
+    private WebDriver driver;
     private final int IMPLICIT_WAIT = 10;
-    private static WebDriverWait wait;
+    private WebDriverWait wait;
     @BeforeSuite(alwaysRun=true)
     void setUp(){
         //TODO: add here check on os
@@ -28,19 +28,22 @@ public class MyTripTest {
         System.out.println("SetUp");
     }
 
+    /**
+     *
+     a. Open make my trip
+     b. select train->select pnr status
+     c.enter pnr and verify pnr number and status
+     */
     @Test
     public void verifyPnrStatus(){
-        /**
-         *
-         a. Open make my trip
-         b. select train->select pnr status
-         c.enter pnr and verify pnr number and status
-         */
+
         System.out.println("Open make my trip");
         driver.get("https://www.makemytrip.com/");//a
-        driver.findElement(By.xpath("//nav//a[contains(@href,'/railways')]")).click();//b
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//nav//a[contains(@href,'/railways')]")))).click();//b
         WebElement pnr_status = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//span[contains(text(),'PNR')]"))));
         pnr_status.click();
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("pnr")))).sendKeys("8602158775");
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//a[contains(@class, 'primaryBtn')]")))).click();
     }
 
     @AfterSuite(alwaysRun=true)
